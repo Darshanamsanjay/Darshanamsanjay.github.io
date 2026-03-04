@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjay Darshanam | Azure & SOC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;700&display=swap');
+        
+        :root {
+            --accent: #3b82f6;
+            --bg: #000000;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Custom Grainy Texture */
+        .noise::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            opacity: 0.04;
+            z-index: 9999;
+            pointer-events: none;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+        }
+
+        /* Tech Grid Background */
+        .grid-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .bento-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(20, 20, 20, 0.9);
+            transform: scale(0.99);
+        }
+
+        .text-huge {
+            font-size: clamp(3rem, 15vw, 12rem);
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* F1 Car Scroll-Mapped Styling */
+        .f1-container {
+            position: absolute;
+            top: 20%;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .f1-car {
+            position: absolute;
+            /* Initial state off-screen to the right */
+            left: 110%;
+            width: 280px;
+            filter: blur(1px);
+            transform: skewX(-10deg);
+            will-change: left;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            width: 8px; height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s;
+        }
+        #cursor-follower {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            color: #666;
+        }
+
+        .status-dot {
+            width: 6px; height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="noise grid-bg">
+
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- Minimal Floating Nav -->
+    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[60]">
+        <div class="flex items-center space-x-6 bg-white/5 backdrop-blur-2xl border border-white/10 px-8 py-4 rounded-full">
+            <a href="#home" class="tag hover:text-white transition">Index</a>
+            <a href="#work" class="tag hover:text-white transition">Systems</a>
+            <a href="#security" class="tag hover:text-white transition">Security</a>
+            <a href="#contact" class="tag hover:text-white transition">Link</a>
+        </div>
+    </nav>
+
+    <!-- Header / Branding -->
+    <header class="fixed top-0 left-0 w-full px-10 py-8 flex justify-between items-center z-50 mix-blend-difference">
+        <div class="font-bold tracking-tighter text-xl text-white uppercase">Sanjay Darshanam</div>
+        <div class="flex items-center space-x-3">
+            <span class="status-dot"></span>
+            <span class="tag text-white">Open to SOC Roles</span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center px-10 pt-20">
+        <div class="max-w-[1400px] mx-auto w-full">
+            <div class="reveal mb-10">
+                <span class="tag">System Engineer / Cybersecurity Enthusiast</span>
+            </div>
+            
+            <h1 class="reveal text-huge font-bold mb-12">
+                BUILDING<br/>
+                <span class="text-neutral-700">RESILIENT</span><br/>
+                SYSTEMS.
+            </h1>
+
+            <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-10 mt-20 items-end">
+                <div class="md:col-span-1">
+                    <p class="font-inter text-neutral-400 leading-relaxed text-sm">
+                        Optimizing enterprise infrastructure for 5,000+ global users at TCS. Transitioning into the frontlines of Cybersecurity as a SOC Analyst.
+                    </p>
+                </div>
+                <div class="md:col-span-2 flex justify-end space-x-20">
+                    <div class="group">
+                        <div class="text-6xl font-bold tracking-tighter">99.9<span class="text-blue-500">%</span></div>
+                        <div class="tag mt-2">Uptime Integrity</div>
+                    </div>
+                    <div class="group">
+                        <div class="text-6xl font-bold tracking-tighter">02<span class="text-blue-500">+</span></div>
+                        <div class="tag mt-2">Years of Impact</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Content Grid -->
+    <section id="work" class="py-20 px-10">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <!-- Experience Lead -->
+            <div class="md:col-span-8 bento-card rounded-[2.5rem] p-12 reveal">
+                <div class="flex justify-between items-start mb-20">
+                    <div>
+                        <h2 class="tag mb-4">Core Experience</h2>
+                        <h3 class="text-4xl font-bold tracking-tighter">System Engineer @ TCS</h3>
+                    </div>
+                    <div class="text-right">
+                        <span class="tag">2023 - Present</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 font-inter">
+                    <div class="space-y-4">
+                        <p class="text-white font-bold text-lg">Infrastructure Architecture</p>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Managed high-tier Windows Server and Azure environments. Steering full SDLC—from business requirements to global deployment—ensuring 100% stakeholder alignment.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-white font-bold text-lg">Automation & RCA</p>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Achieved a 20% reduction in recurring tickets through rigorous Root Cause Analysis and PowerShell workflow standardization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certs Side Block -->
+            <div class="md:col-span-4 bento-card rounded-[2.5rem] p-12 reveal bg-neutral-100 text-black">
+                <h2 class="tag text-neutral-500 mb-10">Validated</h2>
+                <div class="space-y-8">
+                    <div>
+                        <div class="text-4xl font-bold tracking-tighter italic">AZ-104</div>
+                        <div class="tag text-neutral-600">Azure Administrator Associate</div>
+                    </div>
+                    <div class="h-px bg-black/10"></div>
+                    <div>
+                        <div class="text-4xl font-bold tracking-tighter italic">AZ-900</div>
+                        <div class="tag text-neutral-600">Azure Fundamentals</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Terminal -->
+            <div class="md:col-span-4 bento-card rounded-[2.5rem] p-12 reveal">
+                <h2 class="tag mb-8">Stack</h2>
+                <div class="space-y-6">
+                    <div class="flex justify-between border-b border-white/5 pb-2">
+                        <span class="text-sm font-bold">Cloud</span>
+                        <span class="text-xs text-neutral-500">Azure, AWS</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/5 pb-2">
+                        <span class="text-sm font-bold">OS/Dir</span>
+                        <span class="text-xs text-neutral-500">AD, WinServer, Intune</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/5 pb-2">
+                        <span class="text-sm font-bold">Script</span>
+                        <span class="text-xs text-neutral-500">PowerShell, Python</span>
+                    </div>
+                    <div class="flex justify-between border-b border-white/5 pb-2">
+                        <span class="text-sm font-bold">Cyber</span>
+                        <span class="text-xs text-neutral-500">VPN, BitLocker, RCA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO Special Section -->
+            <div class="md:col-span-8 bento-card rounded-[2.5rem] p-12 reveal flex items-end justify-between">
+                <div class="max-w-md">
+                    <h2 class="tag mb-6 text-blue-500">Growth Specialist</h2>
+                    <h3 class="text-3xl font-bold tracking-tighter mb-4">6 Years of SEO & Performance Marketing</h3>
+                    <p class="text-neutral-500 text-sm font-inter">Deep expertise in Google Ads and SOE management. Built and scaled multiple web entities that have remained operational and profitable since 2018.</p>
+                </div>
+                <div class="hidden md:block text-neutral-900 font-bold text-9xl absolute -bottom-10 -right-5 select-none uppercase">
+                    SEO
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Transition Section with Scroll-Controlled F1 Car -->
+    <section id="security" class="py-40 px-10 bg-white text-black relative overflow-hidden">
+        <div class="f1-container">
+            <svg id="f1-car" class="f1-car" viewBox="0 0 100 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Sleek Car Body -->
+                <path d="M95 18C95 18 85 18 80 16C75 14 65 10 50 10C35 10 25 14 15 17C5 20 0 20 0 20L2 22H98L95 18Z" fill="#3b82f6"/>
+                <!-- Wheels -->
+                <circle cx="20" cy="21" r="3.5" fill="#000"/>
+                <circle cx="80" cy="21" r="3.5" fill="#000"/>
+                <!-- Details -->
+                <rect x="45" y="5" width="10" height="2" fill="#3b82f6"/>
+                <path d="M70 10L85 5H90V10H70Z" fill="#3b82f6"/>
+                <!-- Cockpit -->
+                <path d="M45 10C45 10 48 6 52 6C56 6 59 10 59 10" stroke="#000" stroke-width="0.5"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-[1400px] mx-auto relative z-20">
+            <div class="tag text-neutral-400 mb-10 reveal">Future Direction</div>
+            <h2 class="text-7xl md:text-[10rem] font-bold tracking-tighter leading-none mb-20 reveal">
+                ASPIRING<br/>
+                <span class="text-blue-600">SOC ANALYST.</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center reveal">
+                <p class="text-xl font-medium leading-relaxed">
+                    Merging my foundation in enterprise system administration with a passion for threat hunting and incident response. Enthusiastic about securing the digital perimeter.
+                </p>
+                <div class="flex space-x-4">
+                    <div class="w-full h-px bg-black/10 self-center"></div>
+                    <i class="fas fa-shield-virus text-4xl text-blue-600"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contact" class="min-h-screen flex items-center px-10">
+        <div class="max-w-[1400px] mx-auto w-full text-center">
+            <h2 class="text-huge font-bold mb-20 reveal">LET'S TALK.</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-12 reveal">
+                <a href="mailto:darshanamsanjay12@gmail.com" class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">Email</a>
+                <span class="hidden md:block text-neutral-800 text-4xl">/</span>
+                <a href="https://linkedin.com/in/SanjayDarshanam" target="_blank" class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">LinkedIn</a>
+                <span class="hidden md:block text-neutral-800 text-4xl">/</span>
+                <a href="tel:+918464046459" class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">+91 84640 46459</a>
+            </div>
+            
+            <div class="mt-40 reveal">
+                <span class="tag">Hyderabad, Telangana, India</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="p-10 text-center border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto opacity-30 font-inter text-[10px] uppercase tracking-widest font-bold">
+            <div>© 2024 Sanjay Darshanam</div>
+            <div>Built for High-Level System Engineering</div>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX - 16 + 'px';
+                follower.style.top = e.clientY - 16 + 'px';
+            }, 50);
+        });
+
+        // Hover Effect for Cursor
+        document.querySelectorAll('a, button, .bento-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                follower.style.transform = 'scale(2)';
+                follower.style.background = 'rgba(255,255,255,0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                follower.style.transform = 'scale(1)';
+                follower.style.background = 'transparent';
+            });
+        });
+
+        // Scroll Animation Logic
+        function handleScroll() {
+            const reveals = document.querySelectorAll(".reveal");
+            const securitySection = document.getElementById("security");
+            const f1Car = document.getElementById("f1-car");
+            const windowHeight = window.innerHeight;
+
+            // 1. Handle standard reveal animations
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add("active");
+                }
+            });
+
+            // 2. Handle Scroll-Controlled F1 Car (Manual Scrubbing)
+            if (securitySection && f1Car) {
+                const rect = securitySection.getBoundingClientRect();
+                
+                // Calculate percentage of scroll through the section
+                // 0 = just entered bottom of screen, 1 = just left top of screen
+                const scrollDistance = windowHeight + rect.height;
+                const currentPos = windowHeight - rect.top;
+                let scrollPercent = currentPos / scrollDistance;
+                
+                // Clamp between 0 and 1
+                scrollPercent = Math.max(0, Math.min(1, scrollPercent));
+
+                // Map 0 -> 110% (right) to 1 -> -30% (left)
+                const startPos = 110;
+                const endPos = -30;
+                const currentX = startPos + (endPos - startPos) * scrollPercent;
+                
+                f1Car.style.left = currentX + '%';
+                
+                // Optional: Add a slight tilt based on scroll direction/speed
+                // This makes it feel more "physical"
+                const tilt = (scrollPercent - 0.5) * 10;
+                f1Car.style.transform = `skewX(${tilt - 10}deg)`;
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("load", handleScroll);
+    </script>
+</body>
+</html>
