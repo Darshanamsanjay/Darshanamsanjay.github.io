@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanjay Darshanam | System Engineer & SOC</title>
+    <title>Sanjay Darshanam | Azure & SOC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -87,13 +87,18 @@
 
         .f1-car {
             position: absolute;
-            /* Initial state off-screen to the right */
             left: 110%;
             width: 280px;
             filter: blur(1px);
             transform: skewX(-10deg);
             will-change: left;
             transition: transform 0.1s ease-out;
+        }
+
+        /* Slider Controls Styling */
+        .slider-dot.active {
+            background-color: var(--accent);
+            width: 24px;
         }
 
         /* Custom Cursor */
@@ -137,6 +142,17 @@
             0% { opacity: 1; }
             50% { opacity: 0.4; }
             100% { opacity: 1; }
+        }
+
+        /* Certificate Modal Styles */
+        #cert-modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #cert-modal.active {
+            display: flex;
+            opacity: 1;
         }
     </style>
 </head>
@@ -215,12 +231,12 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 font-inter">
                     <div class="space-y-4">
-                        <p class="text-white font-bold text-lg"> TECHNICAL SKILLS</p>
+                          <p class="text-white font-bold text-lg"> TECHNICAL SKILLS</p>
                         <p class="text-neutral-500 text-sm leading-relaxed"><br><strong><span style="color: white;">● Infrastructure Monitoring:</span></strong> System & Application Monitoring, Dashboard Management,
 Daily Monitoring Checklists, Alert & Alarm Remediation, and Capacity Planning.</br>
-<br><span style="color: white;">● <strong>Environments & Architecture:</span></strong> Azure Cloud, On-Premises IT Landscapes, PROD/STAGE
+<br><span style="color: white;">● <strong>Environments & Architecture:</span></strong> Azure Cloud, JamF, On-Premises IT Landscapes, PROD/STAGE
 Environments, Data Centers, LAN/WAN.</br>
-<br><span style="color: white;">● <strong>System Administration:</span></strong> Linux, Windows, Virtualization, Storage, Active Directory,
+<br><span style="color: white;">● <strong>System Administration:</span></strong> Linux, Windows, MAC, Virtualization, Storage, Active Directory,
 Endpoint Management.</br>
 <br><span style="color: white;">● <strong>Automation & Scripting:</span></strong> PowerShell, Shell Scripting, Automated System Checks.</br>
 <br><span style="color: white;">● <strong>IT Operations:</span></strong> Root Cause Analysis (RCA), Incident Management, OLA/SLA Compliance,
@@ -233,19 +249,41 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
                 </div>
             </div>
 
-            <!-- Certs Side Block -->
-            <div class="md:col-span-4 bento-card rounded-[2.5rem] p-12 reveal bg-neutral-100 text-black">
-                <h2 class="tag text-neutral-500 mb-10">Validated</h2>
-                <div class="space-y-8">
-                    <div>
-                        <div class="text-4xl font-bold tracking-tighter italic">AZ-104</div>
-                        <div class="tag text-neutral-600">Azure Administrator Associate</div>
+            <!-- Certs Gallery Block -->
+            <div class="md:col-span-4 bento-card rounded-[2.5rem] p-8 reveal bg-neutral-900 flex flex-col justify-between">
+                <div>
+                    <h2 class="tag text-neutral-500 mb-8">Validated Credentials</h2>
+                    <div class="space-y-4">
+                        <!-- AZ-104 Certificate -->
+                        <div onclick="openModal('Screenshot 2026-03-05 175034.png', 'Azure Administrator Associate')" class="group/cert relative aspect-[3/2] bg-black rounded-2xl border border-white/5 overflow-hidden flex flex-col items-center justify-center cursor-pointer">
+                            <img src="Screenshot 2026-03-05 175034.png" alt="AZ-104 Certificate" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/cert:opacity-60 transition-opacity">
+                            <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover/cert:opacity-100 transition-opacity"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-2 group-hover/cert:scale-110 transition-transform">
+                                    <i class="fas fa-expand text-white text-xs"></i>
+                                </div>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-white shadow-2xl">AZ-104</p>
+                            </div>
+                        </div>
+
+                        <!-- AZ-900 Certificate -->
+                        <div onclick="openModal('Screenshot 2026-03-05 175056.png', 'Azure Fundamentals')" class="group/cert relative aspect-[3/2] bg-black rounded-2xl border border-white/5 overflow-hidden flex flex-col items-center justify-center cursor-pointer">
+                            <img src="Screenshot 2026-03-05 175056.png" alt="AZ-900 Certificate" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/cert:opacity-60 transition-opacity">
+                            <div class="absolute inset-0 bg-blue-400/10 opacity-0 group-hover/cert:opacity-100 transition-opacity"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-2 group-hover/cert:scale-110 transition-transform">
+                                    <i class="fas fa-expand text-white text-xs"></i>
+                                </div>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-white shadow-2xl">AZ-900</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="h-px bg-black/10"></div>
-                    <div>
-                        <div class="text-4xl font-bold tracking-tighter italic">AZ-900</div>
-                        <div class="tag text-neutral-600">Azure Fundamentals</div>
-                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
+                    <span class="text-[9px] text-neutral-600 font-bold uppercase tracking-widest italic leading-none">Microsoft Certified Professional</span>
+                    <i class="fab fa-microsoft text-neutral-800 text-xs"></i>
                 </div>
             </div>
 
@@ -272,14 +310,46 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
                 </div>
             </div>
 
-            <!-- SEO Special Section -->
-            <div class="md:col-span-8 bento-card rounded-[2.5rem] p-12 reveal flex items-end justify-between">
-                <div class="max-w-md">
-                    <h2 class="tag mb-6 text-blue-500">Growth Specialist</h2>
-                    <h3 class="text-3xl font-bold tracking-tighter mb-4">6 Years of SEO & Performance Marketing</h3>
-                    <p class="text-neutral-500 text-sm font-inter">Deep expertise in Google Ads and SOE management. Built and scaled multiple web entities that have remained operational and profitable since 2018.</p>
+            <!-- Growth Specialist with Website Slider -->
+            <div class="md:col-span-8 bento-card rounded-[2.5rem] p-10 reveal overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center h-full relative z-10">
+                    <div>
+                        <h2 class="tag mb-6 text-blue-500">Growth Specialist</h2>
+                        <h3 class="text-3xl font-bold tracking-tighter mb-4 italic leading-tight">6 Years of SEO & Performance Marketing</h3>
+                        <p class="text-neutral-500 text-sm font-inter mb-6">Expert in Google Ads and SEO management. Built and scaled high-traffic web entities that have remained operational since 2018.</p>
+                        
+                        <!-- Navigation dots -->
+                        <div class="flex items-center space-x-3 mb-6 lg:mb-0">
+                            <button onclick="changeSlide(-1)" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
+                                <i class="fas fa-chevron-left text-[10px]"></i>
+                            </button>
+                            <div class="flex space-x-2" id="slider-dots">
+                                <!-- Dots generated by JS -->
+                            </div>
+                            <button onclick="changeSlide(1)" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
+                                <i class="fas fa-chevron-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- The Dialogue Swipe Box (Slider) -->
+                    <div class="relative h-[240px] w-full bg-neutral-900/50 rounded-2xl border border-white/5 overflow-hidden group/browser">
+                        <!-- Browser Header -->
+                        <div class="h-8 bg-neutral-800/80 flex items-center px-4 space-x-2">
+                            <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-green-500/50"></div>
+                            <div class="flex-grow"></div>
+                            <i class="fas fa-shield-alt text-[10px] text-neutral-600"></i>
+                        </div>
+                        
+                        <!-- Slide Content Container -->
+                        <div id="website-slider" class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.16, 1, 0.3, 1)]">
+                            <!-- Slides generated by JS -->
+                        </div>
+                    </div>
                 </div>
-                <div class="hidden md:block text-neutral-900 font-bold text-9xl absolute -bottom-10 -right-5 select-none uppercase">
+                <div class="hidden md:block text-neutral-900 font-bold text-9xl absolute -bottom-10 -right-5 select-none uppercase opacity-50 z-0">
                     SEO
                 </div>
             </div>
@@ -291,15 +361,11 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
     <section id="security" class="py-40 px-10 bg-white text-black relative overflow-hidden">
         <div class="f1-container">
             <svg id="f1-car" class="f1-car" viewBox="0 0 100 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Sleek Car Body -->
                 <path d="M95 18C95 18 85 18 80 16C75 14 65 10 50 10C35 10 25 14 15 17C5 20 0 20 0 20L2 22H98L95 18Z" fill="#3b82f6"/>
-                <!-- Wheels -->
                 <circle cx="20" cy="21" r="3.5" fill="#000"/>
                 <circle cx="80" cy="21" r="3.5" fill="#000"/>
-                <!-- Details -->
                 <rect x="45" y="5" width="10" height="2" fill="#3b82f6"/>
                 <path d="M70 10L85 5H90V10H70Z" fill="#3b82f6"/>
-                <!-- Cockpit -->
                 <path d="M45 10C45 10 48 6 52 6C56 6 59 10 59 10" stroke="#000" stroke-width="0.5"/>
             </svg>
         </div>
@@ -340,14 +406,121 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
         </div>
     </section>
 
+    <!-- Certificate Modal Overlay -->
+    <div id="cert-modal" class="fixed inset-0 z-[100] items-center justify-center p-6 bg-black/95 backdrop-blur-xl">
+        <button onclick="closeModal()" class="absolute top-8 right-8 text-white text-2xl hover:text-blue-500 transition">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="max-w-4xl w-full bg-neutral-900 p-2 rounded-3xl border border-white/10 shadow-2xl relative">
+            <img id="modal-img" src="" alt="Certificate" class="w-full h-auto rounded-2xl shadow-inner">
+            <div class="absolute -bottom-16 left-0 w-full text-center">
+                <p id="modal-title" class="tag text-white text-sm"></p>
+            </div>
+        </div>
+    </div>
+
     <footer class="p-10 text-center border-t border-white/5">
         <div class="flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto opacity-30 font-inter text-[10px] uppercase tracking-widest font-bold">
-            <div>© 2024 Sanjay Darshanam</div>
-            <div>Built for High-Level System Engineering</div>
+            <div>© 2026 Sanjay Darshanam</div>
+            <div>
+<a href="https://www.instagram.com/darshanam_sanjay/" 
+target="_blank"
+class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:opacity-100 text-2xl transition duration-300">
+<i class="fa-brands fa-instagram"></i>
+</a>
+</div>
         </div>
     </footer>
 
     <script>
+        // Certificate Modal Logic
+        function openModal(imgSrc, title) {
+            const modal = document.getElementById('cert-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            
+            modalImg.src = imgSrc;
+            modalTitle.textContent = title;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('cert-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Website Project Data
+        const projects = [
+            {
+                title: "Arya Samaj Moosapet",
+                url: "https://www.aryasamajmoosapet.com/",
+                description: "Digital transformation for cultural heritage."
+            },
+            {
+                title: "Arya Samaj Mettuguda",
+                url: "https://www.aryasamajamumettuguda.com/",
+                description: "Optimized web presence and community engagement."
+            },
+            {
+                title: "Arya Samaj Balkampet",
+                url: "https://www.aryasamajamubalkampet.com/",
+                description: "Built for speed and high-traffic performance."
+            }
+        ];
+
+        let currentSlide = 0;
+
+        // Initialize Slider
+        function initSlider() {
+            const slider = document.getElementById('website-slider');
+            const dots = document.getElementById('slider-dots');
+            
+            projects.forEach((proj, idx) => {
+                const slide = document.createElement('div');
+                slide.className = 'min-w-full flex flex-col items-center justify-center p-8 text-center';
+                slide.innerHTML = `
+                    <div class="tag text-blue-500 mb-2">Live Website</div>
+                    <h4 class="text-2xl font-bold tracking-tight mb-2">${proj.title}</h4>
+                    <p class="text-xs text-neutral-500 mb-6 font-inter">${proj.description}</p>
+                    <a href="${proj.url}" target="_blank" class="px-6 py-2 bg-white text-black text-[10px] font-bold uppercase rounded-full hover:bg-blue-500 hover:text-white transition group">
+                        Visit Site <i class="fas fa-external-link-alt ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition text-[8px]"></i>
+                    </a>
+                `;
+                slider.appendChild(slide);
+
+                const dot = document.createElement('div');
+                dot.className = `slider-dot h-1 rounded-full bg-white/10 transition-all duration-500 ${idx === 0 ? 'active' : 'w-4'}`;
+                dots.appendChild(dot);
+            });
+        }
+
+        function changeSlide(dir) {
+            currentSlide = (currentSlide + dir + projects.length) % projects.length;
+            updateSlider();
+        }
+
+        function updateSlider() {
+            const slider = document.getElementById('website-slider');
+            const dots = document.querySelectorAll('.slider-dot');
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, idx) => {
+                if(idx === currentSlide) {
+                    dot.classList.add('active');
+                    dot.classList.remove('w-4');
+                } else {
+                    dot.classList.remove('active');
+                    dot.classList.add('w-4');
+                }
+            });
+        }
+
         // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
         const follower = document.getElementById('cursor-follower');
@@ -355,15 +528,13 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            
             setTimeout(() => {
                 follower.style.left = e.clientX - 16 + 'px';
                 follower.style.top = e.clientY - 16 + 'px';
             }, 50);
         });
 
-        // Hover Effect for Cursor
-        document.querySelectorAll('a, button, .bento-card').forEach(el => {
+        document.querySelectorAll('a, button, .bento-card, .group\\/cert').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 follower.style.transform = 'scale(2)';
                 follower.style.background = 'rgba(255,255,255,0.1)';
@@ -381,7 +552,6 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
             const f1Car = document.getElementById("f1-car");
             const windowHeight = window.innerHeight;
 
-            // 1. Handle standard reveal animations
             reveals.forEach(el => {
                 const elementTop = el.getBoundingClientRect().top;
                 if (elementTop < windowHeight - 100) {
@@ -389,41 +559,28 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
                 }
             });
 
-            // 2. Handle Scroll-Controlled F1 Car (Manual Scrubbing)
             if (securitySection && f1Car) {
                 const rect = securitySection.getBoundingClientRect();
-                
-                // Calculate percentage of scroll through the section
-                // 0 = just entered bottom of screen, 1 = just left top of screen
                 const scrollDistance = windowHeight + rect.height;
                 const currentPos = windowHeight - rect.top;
                 let scrollPercent = currentPos / scrollDistance;
-                
-                // Clamp between 0 and 1
                 scrollPercent = Math.max(0, Math.min(1, scrollPercent));
 
-                // Map 0 -> 110% (right) to 1 -> -30% (left)
                 const startPos = 110;
                 const endPos = -30;
                 const currentX = startPos + (endPos - startPos) * scrollPercent;
                 
                 f1Car.style.left = currentX + '%';
-                
-                // Optional: Add a slight tilt based on scroll direction/speed
-                // This makes it feel more "physical"
                 const tilt = (scrollPercent - 0.5) * 10;
                 f1Car.style.transform = `skewX(${tilt - 10}deg)`;
             }
         }
 
         window.addEventListener("scroll", handleScroll);
-        window.addEventListener("load", handleScroll);
+        window.addEventListener("load", () => {
+            initSlider();
+            handleScroll();
+        });
     </script>
 </body>
-
 </html>
-
-
-
-
-
