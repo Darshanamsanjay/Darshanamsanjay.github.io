@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;700&display=swap');
-        
+
         :root {
             --accent: #3b82f6;
             --bg: #000000;
@@ -22,13 +23,18 @@
             cursor: none;
         }
 
-        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
 
         /* Custom Grainy Texture */
         .noise::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             opacity: 0.04;
             z-index: 9999;
             pointer-events: none;
@@ -37,7 +43,7 @@
 
         /* Tech Grid Background */
         .grid-bg {
-            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
             background-size: 40px 40px;
         }
 
@@ -73,26 +79,58 @@
             transform: translateY(0);
         }
 
-        /* F1 Car Scroll-Mapped Styling */
-        .f1-container {
+        /* Hummer Car Scroll-Mapped Styling */
+        .hummer-container {
             position: absolute;
-            top: 20%;
+            top: -5%;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: 200px;
             pointer-events: none;
-            overflow: hidden;
+            overflow: visible;
             z-index: 10;
         }
 
-        .f1-car {
+        .hummer-car {
             position: absolute;
             left: 110%;
-            width: 280px;
-            filter: blur(1px);
-            transform: skewX(-10deg);
-            will-change: left;
-            transition: transform 0.1s ease-out;
+            width: 420px;
+            will-change: left, transform;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            pointer-events: auto; /* Enable hover interaction */
+            cursor: pointer;
+        }
+
+        .hummer-inner {
+            transform-origin: center bottom;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+        }
+
+        /* Hover Bounce */
+        .hummer-car:hover .hummer-inner {
+            transform: translateY(-20px) rotate(-3deg);
+        }
+
+        /* Smoke Particles */
+        .smoke-particle {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(160, 160, 160, 0.7) 0%, rgba(160, 160, 160, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: smoke-rise 1.2s ease-out forwards;
+            mix-blend-mode: multiply;
+            z-index: 5;
+        }
+
+        @keyframes smoke-rise {
+            0% { opacity: 0.8; transform: scale(0.3) translate(0, 0); }
+            100% { opacity: 0; transform: scale(2.5) translate(40px, -60px); }
         }
 
         /* Slider Controls Styling */
@@ -103,7 +141,8 @@
 
         /* Custom Cursor */
         #cursor {
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             background: #fff;
             border-radius: 50%;
             position: fixed;
@@ -111,9 +150,11 @@
             z-index: 10000;
             transition: transform 0.1s;
         }
+
         #cursor-follower {
-            width: 40px; height: 40px;
-            border: 1px solid rgba(255,255,255,0.3);
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
@@ -130,7 +171,8 @@
         }
 
         .status-dot {
-            width: 6px; height: 6px;
+            width: 6px;
+            height: 6px;
             background: #22c55e;
             border-radius: 50%;
             display: inline-block;
@@ -139,9 +181,17 @@
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Certificate Modal Styles */
@@ -150,12 +200,14 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         #cert-modal.active {
             display: flex;
             opacity: 1;
         }
     </style>
 </head>
+
 <body class="noise grid-bg">
 
     <div id="cursor"></div>
@@ -163,7 +215,8 @@
 
     <!-- Minimal Floating Nav -->
     <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[60]">
-        <div class="flex items-center space-x-6 bg-white/5 backdrop-blur-2xl border border-white/10 px-8 py-4 rounded-full">
+        <div
+            class="flex items-center space-x-6 bg-white/5 backdrop-blur-2xl border border-white/10 px-8 py-4 rounded-full">
             <a href="#home" class="tag hover:text-white transition">Index</a>
             <a href="#work" class="tag hover:text-white transition">Systems</a>
             <a href="#security" class="tag hover:text-white transition">Security</a>
@@ -186,17 +239,18 @@
             <div class="reveal mb-10">
                 <span class="tag">System Engineer / Cybersecurity Enthusiast</span>
             </div>
-            
+
             <h1 class="reveal text-huge font-bold mb-12">
-                BUILDING<br/>
-                <span class="text-neutral-700">RESILIENT</span><br/>
+                BUILDING<br />
+                <span class="text-neutral-700">RESILIENT</span><br />
                 SYSTEMS.
             </h1>
 
             <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-10 mt-20 items-end">
                 <div class="md:col-span-1">
                     <p class="font-inter text-neutral-400 leading-relaxed text-sm">
-                        Optimizing enterprise infrastructure for 5,000+ global users at TCS. Transitioning into the frontlines of Cybersecurity as a SOC Analyst.
+                        Optimizing enterprise infrastructure for 5,000+ global users at TCS. Transitioning into the
+                        frontlines of Cybersecurity as a SOC Analyst.
                     </p>
                 </div>
                 <div class="md:col-span-2 flex justify-end space-x-20">
@@ -216,7 +270,7 @@
     <!-- Bento Content Grid -->
     <section id="work" class="py-20 px-10">
         <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
-            
+
             <!-- Experience Lead -->
             <div class="md:col-span-8 bento-card rounded-[2.5rem] p-12 reveal">
                 <div class="flex justify-between items-start mb-20">
@@ -228,61 +282,84 @@
                         <span class="tag">2023 - Present</span>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 font-inter">
                     <div class="space-y-4">
-                          <p class="text-white font-bold text-lg"> TECHNICAL SKILLS</p>
-                        <p class="text-neutral-500 text-sm leading-relaxed"><br><strong><span style="color: white;">● Infrastructure Monitoring:</span></strong> System & Application Monitoring, Dashboard Management,
-Daily Monitoring Checklists, Alert & Alarm Remediation, and Capacity Planning.</br>
-<br><span style="color: white;">● <strong>Environments & Architecture:</span></strong> Azure Cloud, JamF, On-Premises IT Landscapes, PROD/STAGE
-Environments, Data Centers, LAN/WAN.</br>
-<br><span style="color: white;">● <strong>System Administration:</span></strong> Linux, Windows, MAC, Virtualization, Storage, Active Directory,
-Endpoint Management.</br>
-<br><span style="color: white;">● <strong>Automation & Scripting:</span></strong> PowerShell, Shell Scripting, Automated System Checks.</br>
-<br><span style="color: white;">● <strong>IT Operations:</span></strong> Root Cause Analysis (RCA), Incident Management, OLA/SLA Compliance,
-Process Improvement, IT Documentation, ServiceNow.</br></p>
+                        <p class="text-white font-bold text-lg"> TECHNICAL SKILLS</p>
+                        <p class="text-neutral-500 text-sm leading-relaxed"><br><strong><span style="color: white;">●
+                                    Infrastructure Monitoring:</span></strong> System & Application Monitoring,
+                            Dashboard Management,
+                            Daily Monitoring Checklists, Alert & Alarm Remediation, and Capacity Planning.</br>
+                            <br><span style="color: white;">● <strong>Environments & Architecture:</span></strong> Azure
+                            Cloud, JamF, On-Premises IT Landscapes, PROD/STAGE
+                            Environments, Data Centers, LAN/WAN.</br>
+                            <br><span style="color: white;">● <strong>System Administration:</span></strong> Linux,
+                            Windows, MAC, Virtualization, Storage, Active Directory,
+                            Endpoint Management.</br>
+                            <br><span style="color: white;">● <strong>Automation & Scripting:</span></strong>
+                            PowerShell, Shell Scripting, Automated System Checks.</br>
+                            <br><span style="color: white;">● <strong>IT Operations:</span></strong> Root Cause Analysis
+                            (RCA), Incident Management, OLA/SLA Compliance,
+                            Process Improvement, IT Documentation, ServiceNow.</br>
+                        </p>
                     </div>
                     <div class="space-y-4">
                         <p class="text-white font-bold text-lg">Automation & RCA</p>
-                        <p class="text-neutral-500 text-sm leading-relaxed">Achieved a 20% reduction in recurring tickets through rigorous Root Cause Analysis and PowerShell workflow standardization.</p>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Achieved a 20% reduction in recurring
+                            tickets through rigorous Root Cause Analysis and PowerShell workflow standardization.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Certs Gallery Block -->
-            <div class="md:col-span-4 bento-card rounded-[2.5rem] p-8 reveal bg-neutral-900 flex flex-col justify-between">
+            <div
+                class="md:col-span-4 bento-card rounded-[2.5rem] p-8 reveal bg-neutral-900 flex flex-col justify-between">
                 <div>
                     <h2 class="tag text-neutral-500 mb-8">Validated Credentials</h2>
                     <div class="space-y-4">
                         <!-- AZ-104 Certificate -->
-                        <div onclick="openModal('Screenshot 2026-03-05 175034.png', 'Azure Administrator Associate')" class="group/cert relative aspect-[3/2] bg-black rounded-2xl border border-white/5 overflow-hidden flex flex-col items-center justify-center cursor-pointer">
-                            <img src="Screenshot 2026-03-05 175034.png" alt="AZ-104 Certificate" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/cert:opacity-60 transition-opacity">
-                            <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover/cert:opacity-100 transition-opacity"></div>
-                            
+                        <div onclick="openModal('Screenshot 2026-03-05 175034.png', 'Azure Administrator Associate')"
+                            class="group/cert relative aspect-[3/2] bg-black rounded-2xl border border-white/5 overflow-hidden flex flex-col items-center justify-center cursor-pointer">
+                            <img src="Screenshot 2026-03-05 175034.png" alt="AZ-104 Certificate"
+                                class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/cert:opacity-60 transition-opacity">
+                            <div
+                                class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover/cert:opacity-100 transition-opacity">
+                            </div>
+
                             <div class="relative z-10 flex flex-col items-center">
-                                <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-2 group-hover/cert:scale-110 transition-transform">
+                                <div
+                                    class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-2 group-hover/cert:scale-110 transition-transform">
                                     <i class="fas fa-expand text-white text-xs"></i>
                                 </div>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-white shadow-2xl">AZ-104</p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-white shadow-2xl">AZ-104
+                                </p>
                             </div>
                         </div>
 
                         <!-- AZ-900 Certificate -->
-                        <div onclick="openModal('Screenshot 2026-03-05 175056.png', 'Azure Fundamentals')" class="group/cert relative aspect-[3/2] bg-black rounded-2xl border border-white/5 overflow-hidden flex flex-col items-center justify-center cursor-pointer">
-                            <img src="Screenshot 2026-03-05 175056.png" alt="AZ-900 Certificate" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/cert:opacity-60 transition-opacity">
-                            <div class="absolute inset-0 bg-blue-400/10 opacity-0 group-hover/cert:opacity-100 transition-opacity"></div>
-                            
+                        <div onclick="openModal('Screenshot 2026-03-05 175056.png', 'Azure Fundamentals')"
+                            class="group/cert relative aspect-[3/2] bg-black rounded-2xl border border-white/5 overflow-hidden flex flex-col items-center justify-center cursor-pointer">
+                            <img src="Screenshot 2026-03-05 175056.png" alt="AZ-900 Certificate"
+                                class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/cert:opacity-60 transition-opacity">
+                            <div
+                                class="absolute inset-0 bg-blue-400/10 opacity-0 group-hover/cert:opacity-100 transition-opacity">
+                            </div>
+
                             <div class="relative z-10 flex flex-col items-center">
-                                <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-2 group-hover/cert:scale-110 transition-transform">
+                                <div
+                                    class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-2 group-hover/cert:scale-110 transition-transform">
                                     <i class="fas fa-expand text-white text-xs"></i>
                                 </div>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-white shadow-2xl">AZ-900</p>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-white shadow-2xl">AZ-900
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
-                    <span class="text-[9px] text-neutral-600 font-bold uppercase tracking-widest italic leading-none">Microsoft Certified Professional</span>
+                    <span
+                        class="text-[9px] text-neutral-600 font-bold uppercase tracking-widest italic leading-none">Microsoft
+                        Certified Professional</span>
                     <i class="fab fa-microsoft text-neutral-800 text-xs"></i>
                 </div>
             </div>
@@ -315,25 +392,30 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center h-full relative z-10">
                     <div>
                         <h2 class="tag mb-6 text-blue-500">Learning for Curiosity</h2>
-                        <h3 class="text-3xl font-bold tracking-tighter mb-4 italic leading-tight">6 Years of SEO & Performance Marketing</h3>
-                        <p class="text-neutral-500 text-sm font-inter mb-6">Expert in Google Ads and SEO management. Built and scaled high-traffic web entities that have remained operational since 2018.</p>
-                        
+                        <h3 class="text-3xl font-bold tracking-tighter mb-4 italic leading-tight">6 Years of SEO &
+                            Performance Marketing</h3>
+                        <p class="text-neutral-500 text-sm font-inter mb-6">Expert in Google Ads and SEO management.
+                            Built and scaled high-traffic web entities that have remained operational since 2018.</p>
+
                         <!-- Navigation dots -->
                         <div class="flex items-center space-x-3 mb-6 lg:mb-0">
-                            <button onclick="changeSlide(-1)" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
+                            <button onclick="changeSlide(-1)"
+                                class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
                                 <i class="fas fa-chevron-left text-[10px]"></i>
                             </button>
                             <div class="flex space-x-2" id="slider-dots">
                                 <!-- Dots generated by JS -->
                             </div>
-                            <button onclick="changeSlide(1)" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
+                            <button onclick="changeSlide(1)"
+                                class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition">
                                 <i class="fas fa-chevron-right text-[10px]"></i>
                             </button>
                         </div>
                     </div>
 
                     <!-- The Dialogue Swipe Box (Slider) -->
-                    <div class="relative h-[240px] w-full bg-neutral-900/50 rounded-2xl border border-white/5 overflow-hidden group/browser">
+                    <div
+                        class="relative h-[240px] w-full bg-neutral-900/50 rounded-2xl border border-white/5 overflow-hidden group/browser">
                         <!-- Browser Header -->
                         <div class="h-8 bg-neutral-800/80 flex items-center px-4 space-x-2">
                             <div class="w-2 h-2 rounded-full bg-red-500/50"></div>
@@ -342,14 +424,16 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
                             <div class="flex-grow"></div>
                             <i class="fas fa-shield-alt text-[10px] text-neutral-600"></i>
                         </div>
-                        
+
                         <!-- Slide Content Container -->
-                        <div id="website-slider" class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.16, 1, 0.3, 1)]">
+                        <div id="website-slider"
+                            class="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.16, 1, 0.3, 1)]">
                             <!-- Slides generated by JS -->
                         </div>
                     </div>
                 </div>
-                <div class="hidden md:block text-neutral-900 font-bold text-9xl absolute -bottom-10 -right-5 select-none uppercase opacity-50 z-0">
+                <div
+                    class="hidden md:block text-neutral-900 font-bold text-9xl absolute -bottom-10 -right-5 select-none uppercase opacity-50 z-0">
                     SEO
                 </div>
             </div>
@@ -357,28 +441,30 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
         </div>
     </section>
 
-    <!-- Transition Section with Scroll-Controlled F1 Car -->
+    <!-- Transition Section with Scroll-Controlled Hummer Car -->
     <section id="security" class="py-40 px-10 bg-white text-black relative overflow-hidden">
-        <div class="f1-container">
-            <svg id="f1-car" class="f1-car" viewBox="0 0 100 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M95 18C95 18 85 18 80 16C75 14 65 10 50 10C35 10 25 14 15 17C5 20 0 20 0 20L2 22H98L95 18Z" fill="#3b82f6"/>
-                <circle cx="20" cy="21" r="3.5" fill="#000"/>
-                <circle cx="80" cy="21" r="3.5" fill="#000"/>
-                <rect x="45" y="5" width="10" height="2" fill="#3b82f6"/>
-                <path d="M70 10L85 5H90V10H70Z" fill="#3b82f6"/>
-                <path d="M45 10C45 10 48 6 52 6C56 6 59 10 59 10" stroke="#000" stroke-width="0.5"/>
-            </svg>
+        <div class="hummer-container">
+            <div id="hummer-car" class="hummer-car drop-shadow-2xl mix-blend-multiply">
+                <div class="hummer-inner relative">
+                    <!-- Single Completed Hummer Image -->
+                    <img src="hummer.png" alt="Hummer" class="relative w-full h-auto z-10 mix-blend-multiply pointer-events-none">
+                    
+                    <!-- Smoke Emitter (Attached roughly to the rear right exhaust area) -->
+                    <div id="smoke-emitter" class="absolute bottom-[20%] right-[10%] w-0 h-0 z-0"></div>
+                </div>
+            </div>
         </div>
-        
+
         <div class="max-w-[1400px] mx-auto relative z-20">
             <div class="tag text-neutral-400 mb-10 reveal">Future Direction</div>
             <h2 class="text-7xl md:text-[10rem] font-bold tracking-tighter leading-none mb-20 reveal">
-                ASPIRING<br/>
+                ASPIRING<br />
                 <span class="text-blue-600">SOC ANALYST.</span>
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center reveal">
                 <p class="text-xl font-medium leading-relaxed">
-                    Merging my foundation in enterprise system administration with a passion for threat hunting and incident response. Enthusiastic about securing the digital perimeter.
+                    Merging my foundation in enterprise system administration with a passion for threat hunting and
+                    incident response. Enthusiastic about securing the digital perimeter.
                 </p>
                 <div class="flex space-x-4">
                     <div class="w-full h-px bg-black/10 self-center"></div>
@@ -392,14 +478,19 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
     <section id="contact" class="min-h-screen flex items-center px-10">
         <div class="max-w-[1400px] mx-auto w-full text-center">
             <h2 class="text-huge font-bold mb-20 reveal">LET'S TALK.</h2>
-            <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-12 reveal">
-                <a href="mailto:darshanamsanjay12@gmail.com" class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">Email</a>
+            <div
+                class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-12 reveal">
+                <a href="mailto:darshanamsanjay12@gmail.com"
+                    class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">Email</a>
                 <span class="hidden md:block text-neutral-800 text-4xl">/</span>
-                <a href="https://linkedin.com/in/SanjayDarshanam" target="_blank" class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">LinkedIn</a>
+                <a href="https://linkedin.com/in/SanjayDarshanam" target="_blank"
+                    class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">LinkedIn</a>
                 <span class="hidden md:block text-neutral-800 text-4xl">/</span>
-                <a href="tel:+918464046459" class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">+91 84640 46459</a>
+                <a href="tel:+918464046459"
+                    class="text-3xl md:text-5xl font-bold hover:text-blue-500 transition tracking-tighter">+91 84640
+                    46459</a>
             </div>
-            
+
             <div class="mt-40 reveal">
                 <span class="tag">Hyderabad, Telangana, India</span>
             </div>
@@ -408,7 +499,8 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
 
     <!-- Certificate Modal Overlay -->
     <div id="cert-modal" class="fixed inset-0 z-[100] items-center justify-center p-6 bg-black/95 backdrop-blur-xl">
-        <button onclick="closeModal()" class="absolute top-8 right-8 text-white text-2xl hover:text-blue-500 transition">
+        <button onclick="closeModal()"
+            class="absolute top-8 right-8 text-white text-2xl hover:text-blue-500 transition">
             <i class="fas fa-times"></i>
         </button>
         <div class="max-w-4xl w-full bg-neutral-900 p-2 rounded-3xl border border-white/10 shadow-2xl relative">
@@ -420,15 +512,15 @@ Process Improvement, IT Documentation, ServiceNow.</br></p>
     </div>
 
     <footer class="p-10 text-center border-t border-white/5">
-        <div class="flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto opacity-30 font-inter text-[10px] uppercase tracking-widest font-bold">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center max-w-[1400px] mx-auto opacity-30 font-inter text-[10px] uppercase tracking-widest font-bold">
             <div>© 2026 Sanjay Darshanam</div>
             <div>
-<a href="https://www.instagram.com/darshanam_sanjay/" 
-target="_blank"
-class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:opacity-100 text-2xl transition duration-300">
-<i class="fa-brands fa-instagram"></i>
-</a>
-</div>
+                <a href="https://www.instagram.com/darshanam_sanjay/" target="_blank"
+                    class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:opacity-100 text-2xl transition duration-300">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -438,7 +530,7 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
             const modal = document.getElementById('cert-modal');
             const modalImg = document.getElementById('modal-img');
             const modalTitle = document.getElementById('modal-title');
-            
+
             modalImg.src = imgSrc;
             modalTitle.textContent = title;
             modal.classList.add('active');
@@ -481,7 +573,7 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
         function initSlider() {
             const slider = document.getElementById('website-slider');
             const dots = document.getElementById('slider-dots');
-            
+
             projects.forEach((proj, idx) => {
                 const slide = document.createElement('div');
                 slide.className = 'min-w-full flex flex-col items-center justify-center p-8 text-center';
@@ -511,7 +603,7 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
             const dots = document.querySelectorAll('.slider-dot');
             slider.style.transform = `translateX(-${currentSlide * 100}%)`;
             dots.forEach((dot, idx) => {
-                if(idx === currentSlide) {
+                if (idx === currentSlide) {
                     dot.classList.add('active');
                     dot.classList.remove('w-4');
                 } else {
@@ -524,7 +616,7 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
         // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
         const follower = document.getElementById('cursor-follower');
-        
+
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
@@ -549,7 +641,7 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
         function handleScroll() {
             const reveals = document.querySelectorAll(".reveal");
             const securitySection = document.getElementById("security");
-            const f1Car = document.getElementById("f1-car");
+            const hummerCar = document.getElementById("hummer-car");
             const windowHeight = window.innerHeight;
 
             reveals.forEach(el => {
@@ -559,7 +651,7 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
                 }
             });
 
-            if (securitySection && f1Car) {
+            if (securitySection && hummerCar) {
                 const rect = securitySection.getBoundingClientRect();
                 const scrollDistance = windowHeight + rect.height;
                 const currentPos = windowHeight - rect.top;
@@ -567,12 +659,14 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
                 scrollPercent = Math.max(0, Math.min(1, scrollPercent));
 
                 const startPos = 110;
-                const endPos = -30;
+                const endPos = -40;
                 const currentX = startPos + (endPos - startPos) * scrollPercent;
-                
-                f1Car.style.left = currentX + '%';
-                const tilt = (scrollPercent - 0.5) * 10;
-                f1Car.style.transform = `skewX(${tilt - 10}deg)`;
+
+                hummerCar.style.left = currentX + '%';
+
+                // Add a dynamic up-and-down rattle/bounce since the static image doesn't feature rotating wheels
+                const rattle = Math.sin(scrollPercent * Math.PI * 40) * 2;
+                hummerCar.style.transform = `translateY(${rattle}px)`;
             }
         }
 
@@ -580,8 +674,43 @@ class="flex items-center justify-center max-w-[1400px] mx-auto opacity-40 hover:
         window.addEventListener("load", () => {
             initSlider();
             handleScroll();
+
+            // Hummer Hover Smoke Effect
+            const hummerInteractive = document.getElementById("hummer-car");
+            const smokeEmitter = document.getElementById("smoke-emitter");
+            let smokeInterval;
+
+            function createSmokeParticle() {
+                if (!smokeEmitter) return;
+                const particle = document.createElement('div');
+                particle.classList.add('smoke-particle');
+                
+                // Random drift start
+                particle.style.bottom = (Math.random() * 10 - 5) + 'px';
+                particle.style.right = (Math.random() * 10 - 5) + 'px';
+                
+                smokeEmitter.appendChild(particle);
+                
+                // Cleanup after animation (matches duration)
+                setTimeout(() => particle.remove(), 1200);
+            }
+
+            if (hummerInteractive && smokeEmitter) {
+                hummerInteractive.addEventListener("mouseenter", () => {
+                    // Initial puff burst
+                    for (let i = 0; i < 4; i++) {
+                        setTimeout(createSmokeParticle, i * 70);
+                    }
+                    // Continuous smoke generator while hovered
+                    smokeInterval = setInterval(createSmokeParticle, 120);
+                });
+                
+                hummerInteractive.addEventListener("mouseleave", () => {
+                    clearInterval(smokeInterval);
+                });
+            }
         });
     </script>
 </body>
-</html>
 
+</html>
